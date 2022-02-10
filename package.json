@@ -4,8 +4,8 @@
   "description": "project",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
-  },
+    "start": "node ./bin/www"
+    },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
