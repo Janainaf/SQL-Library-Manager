@@ -1,28 +1,29 @@
 extends ./layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p
-    a.button(href='new_book.html') Create New Book
-  table
-    thead
-      tr
-        th Title
-        th Author
-        th Genre
-        th Year
-    tbody
-      tr
-       each book in books
-        book
-          td 
-            a(href="/books/:id", class="btn-new") #{book.title}
-          td=book.author 
-          td=book.genre
-          td=book.year
-        tbody
-      tr
+  header  
+    h3= "Library"
+    p Welcome to my #{title}
+    p
+      a.button(href="/books/new") Create New Book
+    table
+      thead
+        tr
+          th Title
+          th Author
+          th Genre
+          th Year
+      tbody
+        tr
+        each book in books
+          book
+            td 
+              a(href="/books/:id", class="btn-new") #{book.title}
+            td=book.author 
+            td=book.genre
+            td=book.year
+          tr
+        
 
    
     

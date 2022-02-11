@@ -13,7 +13,7 @@ function asyncHandler(cb) {
   };
 }
 
-/* GET articles listing. */
+/* GET books listing. */
 router.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -23,53 +23,19 @@ router.get(
   })
 );
 
-/* GET articles listing. */
-// router.get(
-//   "/books",
-//   asyncHandler(async (req, res) => {
-//     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-//     res.render("index", { books, title: "Book list" });
-//     console.log(books);
-//   })
-// );
+/* Create a new booking form. */
+router.get("/books/new", (req, res) => {
+  res.render("new-book", { book: {}, title: "New Book" });
+});
 
-/* GET articles listing. */
-// router.get(
-//   "/books/new",
-//   asyncHandler(async (req, res) => {
-//     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-//     res.render("index", { books, title: "Book list" });
-//     console.log(books);
-//   })
-// );
+/* Post bookins listing. */
+router.post(
+  "/",
+  asyncHandler(async (req, res) => {
+    let book;
+    book = await Book.create(req.body);
+    res.redirect("/books/" + book.id);
+  })
+);
 
-/* GET articles listing. */
-// router.get(
-//   "/books/:id",
-//   asyncHandler(async (req, res) => {
-//     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-//     res.render("index", { books, title: "Book list" });
-//     console.log(books);
-//   })
-// );
-
-/* GET articles listing. */
-// router.post(
-//   "/books/:id",
-//   asyncHandler(async (req, res) => {
-//     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-//     res.render("index", { books, title: "Book list" });
-//     console.log(books);
-//   })
-// );
-
-/* GET articles listing. */
-// router.post(
-//   "/books/:id/delete",
-//   asyncHandler(async (req, res) => {
-//     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-//     res.render("index", { books, title: "Book list" });
-//     console.log(books);
-//   })
-// );
 module.exports = router;
