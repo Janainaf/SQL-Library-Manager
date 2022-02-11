@@ -34,8 +34,20 @@ router.post(
   asyncHandler(async (req, res) => {
     let book;
     book = await Book.create(req.body);
-    res.redirect("/books/" + book.id);
+    res.redirect("/");
   })
 );
 
+/* Updating a booking form. */
+router.get(
+  "/books/:id",
+  asyncHandler(async (req, res) => {
+    const book = await Book.findByPk(req.params.id);
+    if (book) {
+      res.render("update-book", { book, title: "Edit Book" });
+    } else {
+      res.sendStatus(404);
+    }
+  })
+);
 module.exports = router;

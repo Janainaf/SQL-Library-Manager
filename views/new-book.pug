@@ -4,14 +4,21 @@ block content
   h2= title
     
   form(action="/", method="post")
-    div
+    p
         label(for="title") Title:
         input(type="text", name="title" value=book.title)
-    div
+    p
         label(for="author") Author:
         input(type="text", name="author" value=book.author)
-    div
-        label(for="year") year:
-        input(type="number", name="year" value=book.title)
+    p
+        label(for="author") Genre:
+        input(type="text", name="genre" value=book.genre)
+    p
+        label(for="year") Year:
+        input(type="text", name="year" value=book.year)
 
-    input(type="submit")
+    p
+        input(type="submit" value="Create New Book")
+    p
+        a.button(href='all_books.html') Cancel
+

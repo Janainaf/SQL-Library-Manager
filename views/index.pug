@@ -2,8 +2,7 @@ extends ./layout
 
 block content
   header  
-    h3= "Library"
-    p Welcome to my #{title}
+    h1= "Library"
     p
       a.button(href="/books/new") Create New Book
     table
@@ -18,7 +17,7 @@ block content
         each book in books
           book
             td 
-              a(href="/books/:id", class="btn-new") #{book.title}
+              a(href="/books/" + book.id, class="btn-new") #{book.title}
             td=book.author 
             td=book.genre
             td=book.year
