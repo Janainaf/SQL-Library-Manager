@@ -23,6 +23,15 @@ router.get(
   })
 );
 
+router.get(
+  "/books",
+  asyncHandler(async (req, res) => {
+    const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
+    res.render("index", { books, title: "Book list" });
+    console.log(books);
+  })
+);
+
 /* Create a new booking form. */
 router.get("/books/new", (req, res) => {
   res.render("new-book", { book: {}, title: "New Book" });
