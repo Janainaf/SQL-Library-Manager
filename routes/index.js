@@ -28,7 +28,7 @@ router.get("/books/new", (req, res) => {
   res.render("new-book", { book: {}, title: "New Book" });
 });
 
-/* Post bookins listing. */
+/* Create a new book */
 router.post(
   "/",
   asyncHandler(async (req, res) => {
@@ -38,16 +38,34 @@ router.post(
   })
 );
 
-/* Updating a booking form. */
+/* Update form. */
 router.get(
   "/books/:id",
   asyncHandler(async (req, res) => {
-    const book = await Book.findByPk(req.params.id);
+    let book = await Book.findByPk(req.params.id);
     if (book) {
-      res.render("update-book", { book, title: "Edit Book" });
+      res.render("update-book", { book, title: "Update Book" });
     } else {
       res.sendStatus(404);
     }
   })
 );
+
+/* Update a book. */
+router.post(
+  "/books/:id",
+  asyncHandler(async (req, res) => {
+    let book;
+    try {
+      book = await Book.findByPk(req.params.id);
+      if (book) {
+        await book.update(req.body);
+        res.redirect("/");
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {}
+  })
+);
+
 module.exports = router;
