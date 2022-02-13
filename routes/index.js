@@ -68,4 +68,30 @@ router.post(
   })
 );
 
+/* Delete  form. */
+router.get(
+  "/books/:id/delete",
+  asyncHandler(async (req, res) => {
+    const book = await Book.findByPk(req.params.id);
+    if (book) {
+      res.render("delete", { book, title: "Delete Book" });
+    } else {
+      res.sendStatus(404);
+    }
+  })
+);
+
+/* Delete 1 book */
+router.post(
+  "/books/:id/delete",
+  asyncHandler(async (req, res) => {
+    const book = await Book.findByPk(req.params.id);
+    if (book) {
+      await book.destroy();
+      res.redirect("/");
+    } else {
+      res.sendStatus(404);
+    }
+  })
+);
 module.exports = router;

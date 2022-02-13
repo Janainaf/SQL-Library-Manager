@@ -19,6 +19,9 @@ block content
 
     p
         input(type="submit" value="Update Book")
+
     p
-        a.button(href='all_books.html') Cancel
+        a.button(href="/books/" + book.id + "/delete") Delete Article
+    p  
+        a.button(href="/") Cancel
 
