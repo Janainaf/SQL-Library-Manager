@@ -55,7 +55,7 @@ router.get(
     if (book) {
       res.render("update-book", { book, title: "Update Book" });
     } else {
-      res.sendStatus(404);
+      res.render("page-not-found", { title: "Page Not Found" });
     }
   })
 );
