@@ -19,7 +19,6 @@ router.get(
   asyncHandler(async (req, res) => {
     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
     res.render("index", { books, title: "Book list" });
-    console.log(books);
   })
 );
 
@@ -28,7 +27,6 @@ router.get(
   asyncHandler(async (req, res) => {
     const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
     res.render("index", { books, title: "Book list" });
-    console.log(books);
   })
 );
 
@@ -39,11 +37,22 @@ router.get("/books/new", (req, res) => {
 
 /* Create a new book */
 router.post(
-  "/",
+  "/books/new",
   asyncHandler(async (req, res) => {
     let book;
-    book = await Book.create(req.body);
-    res.redirect("/");
+    try {
+      book = await Book.create(req.body);
+      res.redirect("/books");
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        book = await Book.build(req.body);
+        res.render("new-book", {
+          book,
+          errors: error.errors,
+          title: "New Book",
+        });
+      }
+    }
   })
 );
 
@@ -69,11 +78,20 @@ router.post(
       book = await Book.findByPk(req.params.id);
       if (book) {
         await book.update(req.body);
-        res.redirect("/");
+        res.redirect("/books");
       } else {
         res.sendStatus(404);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        book = await Book.findByPk(req.params.id);
+        res.render("update-book", {
+          book,
+          errors: error.errors,
+          title: "Update Book",
+        });
+      }
+    }
   })
 );
 
@@ -97,7 +115,7 @@ router.post(
     const book = await Book.findByPk(req.params.id);
     if (book) {
       await book.destroy();
-      res.redirect("/");
+      res.redirect("/books");
     } else {
       res.sendStatus(404);
     }

@@ -2,7 +2,8 @@ extends ./layout
 
 block content
   h2= title
-    
+  if(errors)
+    include error    
   form(action="/books/" + book.id , method="post")
     p
         label(for="title") Title:
@@ -21,7 +22,7 @@ block content
         input(type="submit" value="Update Book")
 
     p
-        a.button(href="/books/" + book.id + "/delete") Delete Article
+        a.button(href="/books/" + book.id + "/delete") Delete Book
     p  
         a.button(href="/") Cancel
 

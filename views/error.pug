@@ -1,5 +1,9 @@
-extends layout
+extends ./layout
 
 block content
-  h1= message
-  h2= error.status
+  if(errors)
+    h3.error.errors Oops an error occurred!
+    ul.error.errors
+      each error in errors
+        li
+        =error.message
