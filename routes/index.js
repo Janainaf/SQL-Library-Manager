@@ -8,7 +8,7 @@ function asyncHandler(cb) {
     try {
       await cb(req, res, next);
     } catch (error) {
-      res.status(500).send(error);
+      next(error);
     }
   };
 }
@@ -51,6 +51,8 @@ router.post(
           errors: error.errors,
           title: "New Book",
         });
+      } else {
+        throw error;
       }
     }
   })
@@ -60,11 +62,15 @@ router.post(
 router.get(
   "/books/:id",
   asyncHandler(async (req, res) => {
-    let book = await Book.findByPk(req.params.id);
-    if (book) {
-      res.render("update-book", { book, title: "Update Book" });
-    } else {
-      res.render("page-not-found", { title: "Page Not Found" });
+    try {
+      const book = await Book.findByPk(req.params.id);
+      if (book) {
+        res.render("update-book", { book, title: "Update Book" });
+      } else {
+        throw error;
+      }
+    } catch {
+      throw error;
     }
   })
 );
@@ -90,6 +96,8 @@ router.post(
           errors: error.errors,
           title: "Update Book",
         });
+      } else {
+        throw error;
       }
     }
   })
